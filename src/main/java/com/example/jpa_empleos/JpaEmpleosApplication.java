@@ -1,11 +1,21 @@
 package com.example.jpa_empleos;
 
+import com.example.jpa_empleos.models.Categoria;
+import com.example.jpa_empleos.repository.CategoriasJPARepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.List;
+
 @SpringBootApplication
 public class JpaEmpleosApplication implements CommandLineRunner {
+
+    private final CategoriasJPARepository categoriasJPARepo;
+
+    public JpaEmpleosApplication(CategoriasJPARepository categoriasJPARepo) {
+        this.categoriasJPARepo = categoriasJPARepo;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(JpaEmpleosApplication.class, args);
@@ -13,15 +23,16 @@ public class JpaEmpleosApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        guardar();
-        eliminar();
+        buscarTodasJPA();
     }
 
-    private void guardar() {
-        System.out.println("guardando");
-    }
-
-    private void eliminar() {
-        System.out.println("eliminando");
+    /**
+     * Método findAll - Interfaz JPARepository
+     */
+    private void buscarTodasJPA() {
+        List<Categoria> categorias = categoriasJPARepo.findAll();
+        for (Categoria categoria : categorias) {
+            System.out.println(categoria.getId() + " " + categoria.getNombre());
+        }
     }
 }
