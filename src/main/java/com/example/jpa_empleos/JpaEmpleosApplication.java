@@ -23,7 +23,14 @@ public class JpaEmpleosApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        buscarTodasJPA();
+        borrarTodasEnBloque();
+    }
+
+    /**
+     * Método deleteAllInBatch [Usar con precaución] - Interfaz JPARepository
+     */
+    private void borrarTodasEnBloque() {
+        categoriasJPARepo.deleteAllInBatch();
     }
 
     /**
