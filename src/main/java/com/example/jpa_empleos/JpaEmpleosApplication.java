@@ -26,7 +26,7 @@ public class JpaEmpleosApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        buscarTodosPaginacionOrdenados();
+        System.out.println("Aplicación lista. Repositorio JPA inyectado: " + categoriasJPARepo);
     }
 
     /**
