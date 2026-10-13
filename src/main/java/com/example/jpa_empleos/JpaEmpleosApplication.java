@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @SpringBootApplication
@@ -36,7 +37,22 @@ public class JpaEmpleosApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        crearUsuarioConPerfiles();
+        buscarUsuario();
+    }
+
+    /**
+     * Método para buscar un usuario y sus perfiles asociados
+     */
+    public void buscarUsuario() {
+        Optional<Usuario> usuarioOptional = usuarioRepo.findById(1);
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            System.out.println("Nombre: " + usuario.getNombre());
+            System.out.println("Perfiles asignados");
+            for (Perfil perfil : usuario.getPerfiles()) {
+                System.out.println(perfil.getPerfil());
+            }
+        }
     }
 
     /**
@@ -44,21 +60,19 @@ public class JpaEmpleosApplication implements CommandLineRunner {
      */
     private void crearUsuarioConPerfiles() {
         Usuario nuevoUsuario = new Usuario();
-        nuevoUsuario.setNombre("Juan Cralos");
+        nuevoUsuario.setNombre("Juan Carlos");
         nuevoUsuario.setEmail("Juan@gmail.com");
         nuevoUsuario.setUsername("juanF");
         nuevoUsuario.setPassword("12345");
-        nuevoUsuario.setEstatus(1); // activo por defecto
-        nuevoUsuario.setFechaRegistro(LocalDate.now()); // fecha actual
+        nuevoUsuario.setEstatus(1);
+        nuevoUsuario.setFechaRegistro(LocalDate.now());
 
-        // Perfiles existentes, solo con su id
         Perfil perfil1 = new Perfil();
         perfil1.setId(2);
 
         Perfil perfil2 = new Perfil();
         perfil2.setId(3);
 
-        // Crear el conjunto de perfiles y asignarlo
         Set<Perfil> perfilesUsuario = new HashSet<>();
         perfilesUsuario.add(perfil1);
         perfilesUsuario.add(perfil2);
