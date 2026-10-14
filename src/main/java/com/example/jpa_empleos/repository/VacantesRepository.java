@@ -9,4 +9,7 @@ import java.util.List;
 public interface VacantesRepository extends JpaRepository<Vacante, Integer> {
 
     List<Vacante> findByEstatus(EstatusVacante estatus);
+
+    List<Vacante> findByDestacadoAndEstatusOrderByIdDesc(int destacado,
+                                                         EstatusVacante estatus);
 }
